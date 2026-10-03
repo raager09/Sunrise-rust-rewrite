@@ -30,6 +30,7 @@
 #include "../hooks/package_trust/package_trust_bypass.h"
 #include "../hooks/polled_input/runtime.h"
 #include "../hooks/retail_log/retail_log_lifecycle.h"
+#include "../hooks/skycraft/runtime.h"
 #include "../hooks/stall_probe/stall_probe.h"
 #include "../hooks/teleport/runtime.h"
 #include "../hooks/world_objects/world_object_registry.h"
@@ -187,6 +188,9 @@ void clear_game_targets() noexcept {
     // The teleport hooks attach whether or not the feature is on, so the interface can enable it
     // without a restart. Both replacements return immediately while nothing is requested.
     (void)hooks::teleport::install();
+    // The camera hook above drives the SkyCraft bridge; it does nothing unless skycraft.json
+    // turns it on.
+    hooks::skycraft::install();
     // Noclip owns its Havok-step target, so a patch-specific miss cannot disable teleport.
     (void)hooks::noclip::install();
     // Attaches whether or not the feature is on, so the interface can enable it without a restart.

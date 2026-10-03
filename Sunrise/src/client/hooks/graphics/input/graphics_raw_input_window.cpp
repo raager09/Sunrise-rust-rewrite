@@ -11,6 +11,7 @@
 #include <bit>
 
 #include "../../../../core/ui/runtime/ui_visibility_runtime.h"
+#include "../../skycraft/runtime.h"
 #include "input.h"
 
 namespace sunrise::client::hooks::graphics::input {
@@ -63,7 +64,9 @@ LRESULT CALLBACK raw_window_procedure(HWND window,
 
     // A captured message still goes to the default procedure, or the system keeps the raw-input
     // buffer alive. That is also the fallback when there is no procedure to forward to.
-    const bool captured = message == WM_INPUT && core::ui::runtime::snapshot().visible;
+    const bool captured =
+        message == WM_INPUT
+        && (core::ui::runtime::snapshot().visible || skycraft::route_raw_input(value));
     const bool forward = !captured && original != nullptr;
     const LRESULT result = forward ? CallWindowProcW(original, window, message, word, value)
                                    : DefWindowProcW(window, message, word, value);

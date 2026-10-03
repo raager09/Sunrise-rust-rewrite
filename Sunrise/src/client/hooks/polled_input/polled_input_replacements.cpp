@@ -13,6 +13,7 @@
 #include <intrin.h>
 
 #include "../../diagnostics/module_range.h"
+#include "../skycraft/runtime.h"
 #include "runtime.h"
 
 namespace sunrise::client::hooks::polled_input {
@@ -53,7 +54,7 @@ std::array<void*, kHandleCount> g_targets{};
  */
 __declspec(noinline) SHORT WINAPI get_key_state(int virtualKey) noexcept {
     if (caller_is_game(_ReturnAddress())) {
-        if (g_interfaceOpen.load(std::memory_order_relaxed)) {
+        if (g_interfaceOpen.load(std::memory_order_relaxed) || skycraft::hides_key(virtualKey)) {
             return kKeyReleased;
         }
         if (is_forced(virtualKey)) {
@@ -73,7 +74,8 @@ __declspec(noinline) SHORT WINAPI get_key_state(int virtualKey) noexcept {
  * @return Released while the interface is open and the caller is the game, else the real state.
  */
 __declspec(noinline) SHORT WINAPI get_async_key_state(int virtualKey) noexcept {
-    if (g_interfaceOpen.load(std::memory_order_relaxed) && caller_is_game(_ReturnAddress())) {
+    if ((g_interfaceOpen.load(std::memory_order_relaxed) || skycraft::hides_key(virtualKey))
+        && caller_is_game(_ReturnAddress())) {
         return kKeyReleased;
     }
     const GetAsyncKeyState next = original<GetAsyncKeyState>(HookSlot::getAsyncKeyState);

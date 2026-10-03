@@ -56,7 +56,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>kernel32.lib;bcrypt.lib;user32.lib;gdi32.lib;dwmapi.lib;d3dcompiler.lib;shell32.lib;ws2_32.lib;synchronization.lib;ole32.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;advapi32.lib;bcrypt.lib;user32.lib;gdi32.lib;dwmapi.lib;d3dcompiler.lib;shell32.lib;ws2_32.lib;synchronization.lib;ole32.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -95,6 +95,7 @@
     <None Include="vendor\detours\LICENSE.md" />
     <None Include="vendor\imgui\LICENSE.txt" />
     <None Include="vendor\lua\LICENSE" />
+    <None Include="vendor\skycraft\LICENSE" />
     <None Include="vendor\lua\README.md" />
     <None Include="vendor\lua\UPSTREAM_README" />
   </ItemGroup>
@@ -244,6 +245,13 @@
     <ClCompile Include="src\client\hooks\sword_skate\sword_skate.cpp" />
     <ClCompile Include="src\client\hooks\fly\fly.cpp" />
     <ClCompile Include="src\client\hooks\infinite_ammo\infinite_ammo.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_blocks.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_input.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_launcher.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_lifecycle.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_link.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_overlay.cpp" />
+    <ClCompile Include="src\client\hooks\skycraft\skycraft_settings_store.cpp" />
     <ClCompile Include="src\client\input\window_focus.cpp" />
     <ClCompile Include="src\client\hooks\teleport\teleport_lifecycle.cpp" />
     <ClCompile Include="src\client\hooks\teleport\teleport_move.cpp" />
@@ -1338,6 +1346,11 @@
     <ClInclude Include="src\client\hooks\sword_skate\sword_skate.h" />
     <ClInclude Include="src\client\hooks\fly\fly.h" />
     <ClInclude Include="src\client\hooks\infinite_ammo\infinite_ammo.h" />
+    <ClInclude Include="src\client\hooks\skycraft\internal.h" />
+    <ClInclude Include="src\client\hooks\skycraft\link.h" />
+    <ClInclude Include="src\client\hooks\skycraft\runtime.h" />
+    <ClInclude Include="src\client\hooks\skycraft\skycraft_settings_store.h" />
+    <ClInclude Include="vendor\skycraft\skycraft_protocol.h" />
     <ClInclude Include="src\client\input\window_focus.h" />
     <ClInclude Include="src\client\hooks\teleport\internal.h" />
     <ClInclude Include="src\client\hooks\teleport\runtime.h" />

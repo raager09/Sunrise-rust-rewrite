@@ -21,6 +21,7 @@
 #include "../hooks/package_trust/package_trust_bypass.h"
 #include "../hooks/polled_input/runtime.h"
 #include "../hooks/retail_log/retail_log_lifecycle.h"
+#include "../hooks/skycraft/runtime.h"
 #include "../hooks/stall_probe/stall_probe.h"
 #include "../hooks/teleport/runtime.h"
 #include "../hooks/world_objects/world_object_registry.h"
@@ -42,6 +43,7 @@ bool initialize(void* module) noexcept {
     // Loaded before the pages register, so each page draws saved values on its first frame.
     movement::initialize(module);
     player::initialize(module);
+    hooks::skycraft::initialize(module);
     ui::activity::authored_placement_marker::initialize(module);
     return ui::runtime::initialize();
 }
@@ -114,6 +116,8 @@ bool shutdown() noexcept {
     hooks::infinite_ammo::uninstall();
     hooks::inactivity::uninstall();
     hooks::noclip::uninstall();
+    // The camera hook drives the bridge, so the bridge goes first.
+    hooks::skycraft::uninstall();
     hooks::teleport::uninstall();
     if (!hooks::config_getter::uninstall()) {
         ReleaseSRWLockExclusive(&runtime::g_lock);
@@ -155,6 +159,7 @@ bool shutdown() noexcept {
     ui::runtime::shutdown();
     // The reverse of the order the stores initialize in.
     ui::activity::authored_placement_marker::shutdown();
+    hooks::skycraft::shutdown();
     player::shutdown();
     movement::shutdown();
     core::log::write(core::log::Channel::client, core::log::Level::info, "ev=shutdown result=ok");

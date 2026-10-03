@@ -16,6 +16,7 @@
 #include "../../../ui/activity/authored_placement_marker.h"
 #include "../../../ui/activity/authored_spatial_overlay.h"
 #include "../../../ui/mission_launch/mission_launch_art.h"
+#include "../../skycraft/runtime.h"
 #include "../../teleport/runtime.h"
 #include "../input/input.h"
 #include "graphics_renderer_report.h"
@@ -137,6 +138,9 @@ void render_frame_locked() noexcept {
             return;
         }
     }
+    // Minecraft's blocks and HUD go under every Sunrise surface.
+    client::hooks::skycraft::present(
+        g_resources.device, g_resources.context, g_resources.renderTarget);
     const core::ui::runtime::VisibilitySnapshot visibility = core::ui::runtime::snapshot();
     transition_input_visibility_locked(visibility.visible);
     ImGui_ImplDX11_NewFrame();

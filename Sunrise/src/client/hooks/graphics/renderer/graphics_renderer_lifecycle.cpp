@@ -10,6 +10,7 @@
 #include "../../cursor/runtime.h"
 #include "../../inactivity/inactivity_override.h"
 #include "../../polled_input/runtime.h"
+#include "../../skycraft/runtime.h"
 #include "../input/input.h"
 #include "graphics_renderer_report.h"
 #include "state.h"
@@ -252,6 +253,7 @@ void release_render_target(Resources& resources) noexcept {
 void release_resources(Resources& resources) noexcept {
     client::ui::mission_launch::art::release();
     world_lines::release();
+    skycraft::release_device();
     release_render_target(resources);
     textures::release_logo_sheet(resources.logoSheet);
     release_com(resources.context);

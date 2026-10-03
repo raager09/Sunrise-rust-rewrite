@@ -17,6 +17,31 @@ Destiny 2 Offline Preservation Mod
 - Script Missions
 - Exploration Features (Fly, Noclip, Activity Override, ...)
 - Persistent Save
+- Minecraft in Destiny through [SkyCraft](https://github.com/chasmlol/skycraft) (experimental, see below)
+
+## Minecraft in Destiny (SkyCraft)
+
+Sunrise can host SkyCraft's Minecraft Fabric mod the way SkyCraft's SKSE plugin does for Skyrim.
+Minecraft runs hidden next to Destiny and brings its inventory, HUD, hand and block placing; the
+blocks you place stay in Destiny's world.
+
+This first version is a follow mode: Destiny keeps moving your Guardian and Minecraft's player
+follows it, because Destiny's collision is not sent to Minecraft yet. Blocks are drawn over
+Destiny's picture, so Destiny's walls do not hide them yet, and Minecraft's weapons do not reach
+Destiny's enemies yet.
+
+1. Unpack `SkyCraft-Minecraft.zip` from a SkyCraft release into `%LOCALAPPDATA%\SkyCraft` (a
+   portable Prism Launcher with a `SkyCraft` instance), then put a SkyCraft mod jar built with the
+   host-drives flag in `Prism\instances\SkyCraft\.minecraft\mods` in place of the bundled one.
+   Start Prism once to sign in with the Microsoft account that owns Minecraft.
+2. Start Destiny with Sunrise once, then set `"enabled": true` in `Sunrise\skycraft.json`
+   (`launcher` and `arguments` there pick another launcher; `start_minecraft` turns the automatic
+   start off).
+3. In game, press **F6** (`hands_key`) for Minecraft hands: the mouse buttons, the wheel and
+   Minecraft's keys (1-9, E, Q, T, /, F3) go to Minecraft, and **O** opens Minecraft's menu.
+   Press F6 again to give them back to Destiny. Movement and look stay Destiny's either way.
+
+If blocks show up mirrored against where you aimed, set `"mirror": true`.
 
 ## WIP
 

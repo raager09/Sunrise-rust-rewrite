@@ -7,6 +7,7 @@
 #include "../../../../core/ui/layout/credits/sunrise_credits_badge.h"
 #include "../../../../core/ui/modules/logs/logs.h"
 #include "../../../../core/ui/runtime/ui_visibility_runtime.h"
+#include "../../skycraft/runtime.h"
 #include "../renderer/renderer.h"
 #include "core/threading/srw_lock.h"
 #include "input.h"
@@ -109,6 +110,11 @@ LRESULT CALLBACK window_procedure(HWND window, UINT message, WPARAM word, LPARAM
             // The default procedure must run or the system keeps the raw-input buffer alive.
             return DefWindowProcW(window, message, word, value);
         }
+        return kCapturedMessageResult;
+    }
+    if (skycraft::route_window_message(message, word, value)) {
+        // Minecraft took it: the hands key, Minecraft's keys, or anything while its screen is up.
+        renderer::dispatch_pending_input_release(window);
         return kCapturedMessageResult;
     }
     const LRESULT result = forward(original, window, message, word, value);
